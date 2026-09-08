@@ -9,4 +9,4 @@ Allow: /
 User-agent: Daumoa
 Allow: /
 
-Sitemap: https://zayzin0715-spec.github.io/nagma-site/sitemap.xml
+Sitemap: https://nagma.co.kr/sitemap.xml
