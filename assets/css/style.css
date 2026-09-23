@@ -374,3 +374,29 @@ img{max-width:100%;display:block}
 .proc__i.in{border-color:var(--ink)}
 .proc__n{font-family:var(--en);font-size:.72rem;font-weight:700;color:var(--mute);letter-spacing:.1em}
 .proc__t{font-weight:700;margin-top:6px}
+
+/* ---------- 법무 문서 (개인정보처리방침 등) ---------- */
+.legal{max-width:880px}
+.legal__intro{font-size:1.0rem;color:var(--body);line-height:1.9;margin-bottom:12px}
+.legal h2{
+  font-family:var(--kr);font-size:clamp(1.05rem,1.5vw,1.28rem);font-weight:700;color:var(--ink);
+  margin:64px 0 20px;padding-top:26px;border-top:1.5px solid var(--ink);letter-spacing:-.01em
+}
+.legal h3{font-size:.98rem;font-weight:700;color:var(--ink);margin:30px 0 10px}
+.legal p{font-size:.95rem;color:var(--body);line-height:1.92;margin-bottom:15px}
+.legal ul,.legal ol{margin:0 0 20px;padding:0;list-style:none}
+.legal li{font-size:.93rem;color:var(--body);line-height:1.92;position:relative}
+.legal ul>li{padding-left:15px}
+.legal ul>li::before{content:'';position:absolute;left:1px;top:.92em;width:6px;height:1px;background:#B9B4B0}
+.legal ol{counter-reset:li}
+.legal ol>li{counter-increment:li;padding-left:26px}
+.legal ol>li::before{
+  content:counter(li)".";position:absolute;left:0;top:0;color:var(--mute);
+  font-variant-numeric:tabular-nums;font-size:.88rem
+}
+.legal li b{font-weight:700;color:var(--ink)}
+.legal__box{background:var(--surface);padding:28px 30px;margin:22px 0}
+.legal__box p{margin-bottom:8px}
+.legal__box p:last-child{margin-bottom:0}
+.legal__date{margin-top:70px;padding-top:26px;border-top:1px solid var(--line);font-size:.88rem;color:var(--mute);line-height:2}
+@media(max-width:640px){.legal h2{margin-top:46px}.legal__box{padding:22px 20px}}
