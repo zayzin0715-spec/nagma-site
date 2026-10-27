@@ -10,19 +10,19 @@ var PATH=NAGMA_PATH, SECOF=NAGMA_SECOF;
 
   /* ---------- data ---------- */
   const NEWS=[
-    {d:'2026.10.26',c:'press',cl:'PRESS',src:'IT비즈뉴스',t:'제약바이오 "데이터 통합이 AX의 출발점" — 나그마, 제약 전문 IT 파트너 입지 강화',s:'제약·바이오 업계의 DX가 AX로 확장되면서 부서별로 흩어진 데이터 통합이 핵심 과제로 떠올랐습니다. HCP 포털·웨비나·통합 메시징·LMS·AI 서비스를 개발하고 운영해 온 나그마의 역할을 다뤘습니다.',u:'https://www.itbiznews.com/news/articleView.html?idxno=229121'},
-    {d:'2026.09.11',c:'event',cl:'EVENT',t:'2026 글로벌 오픈이노베이션 위크 — 바이오헬스 포스터 전시 참가',s:'보건복지부 주최, 한국보건산업진흥원 주관 행사에서 제약·바이오 기업의 부서별 데이터 통합과 AI 기반 업무 환경 구성 방안을 제안했습니다.',u:''},
-    {d:'2026.04.28',c:'press',cl:'PRESS',src:'스타트업데일리',t:'나그마, 국내 대형 제약사 통합 디지털 커뮤니케이션 솔루션 구축·운영',s:'HCP 포털, 웨비나, 메시징을 하나로 묶은 통합 디지털 커뮤니케이션 솔루션을 국내 대형 제약사에 구축하고 운영하고 있습니다.',u:'https://www.startupdaily.kr/news/articleView.html?idxno=9760'},
-    {d:'2025.09.29',c:'cert',cl:'CERTIFIED',t:'기업부설연구소 인정',s:'한국산업기술진흥협회(KOITA)로부터 기업부설연구소 인정을 받았습니다(제2025113058호). AI와 데이터 기술을 자체 연구·개발하는 전담 조직입니다.',u:''},
-    {d:'2025.09.23',c:'video',cl:'VIDEO',t:'인천스타트업파크 인사이드파크 — 나그마 편 [인(턴)스타임]',s:'2025 신규 입주기업 나그마를 소개하는 인천스타트업파크 영상입니다.',u:'https://www.youtube.com/watch?v=zzeun8xg3ug'},
-    {d:'2025.09.16',c:'cert',cl:'PATENT',t:'특허 등록 — 문서 수준 관계 추출 방법 및 장치',s:'문서 속 개체 간 관계를 자동으로 추출하는 자연어처리 기술 특허(제10-2511282호)를 확보했습니다. 지능형 검색과 문서 자동화의 기술 기반입니다.',u:''}
+    {d:'2026.10.26',img:'news-press-02.jpg',fit:'photo',c:'press',cl:'PRESS',src:'IT비즈뉴스',t:'제약바이오 "데이터 통합이 AX의 출발점" — 나그마, 제약 전문 IT 파트너 입지 강화',s:'제약·바이오 업계의 DX가 AX로 확장되면서 부서별로 흩어진 데이터 통합이 핵심 과제로 떠올랐습니다. HCP 포털·웨비나·통합 메시징·LMS·AI 서비스를 개발하고 운영해 온 나그마의 역할을 다뤘습니다.',u:'https://www.itbiznews.com/news/articleView.html?idxno=229121'},
+    {d:'2026.09.11',img:'news-poster-bio.jpg',fit:'doc',c:'event',cl:'EVENT',t:'2026 글로벌 오픈이노베이션 위크 — 바이오헬스 포스터 전시 참가',s:'보건복지부 주최, 한국보건산업진흥원 주관 행사에서 제약·바이오 기업의 부서별 데이터 통합과 AI 기반 업무 환경 구성 방안을 제안했습니다.',u:''},
+    {d:'2026.04.28',img:'news-press-01.jpg',fit:'doc',c:'press',cl:'PRESS',src:'스타트업데일리',t:'나그마, 국내 대형 제약사 통합 디지털 커뮤니케이션 솔루션 구축·운영',s:'HCP 포털, 웨비나, 메시징을 하나로 묶은 통합 디지털 커뮤니케이션 솔루션을 국내 대형 제약사에 구축하고 운영하고 있습니다.',u:'https://www.startupdaily.kr/news/articleView.html?idxno=9760'},
+    {d:'2025.09.29',img:'news-cert-lab.jpg',fit:'doc',c:'cert',cl:'CERTIFIED',t:'기업부설연구소 인정',s:'한국산업기술진흥협회(KOITA)로부터 기업부설연구소 인정을 받았습니다(제2025113058호). AI와 데이터 기술을 자체 연구·개발하는 전담 조직입니다.',u:''},
+    {d:'2025.09.23',img:'news-video-01.jpg',fit:'photo',c:'video',cl:'VIDEO',t:'인천스타트업파크 인사이드파크 — 나그마 편 [인(턴)스타임]',s:'2025 신규 입주기업 나그마를 소개하는 인천스타트업파크 영상입니다.',u:'https://www.youtube.com/watch?v=zzeun8xg3ug'},
+    {d:'2025.09.16',img:'news-cert-patent.jpg',fit:'doc',c:'cert',cl:'PATENT',t:'특허 등록 — 문서 수준 관계 추출 방법 및 장치',s:'문서 속 개체 간 관계를 자동으로 추출하는 자연어처리 기술 특허(제10-2511282호)를 확보했습니다. 지능형 검색과 문서 자동화의 기술 기반입니다.',u:''}
   ];
   const SPACE=[['IMG-01_office-exterior.jpg','회사 전경'],['IMG-02_cafeteria.jpg','카페테리아'],['IMG-16_gym.jpg','체력단련실'],['IMG-05_lounge.jpg','브릿지 라운지'],['IMG-17_pingpong.jpg','탁구장'],['IMG-03_meeting-room.jpg','미팅룸'],['IMG-04_workspace.jpg','업무 공간'],['IMG-06_office-detail.jpg','사무실 디테일']];
   const ACT=[['IMG-08_workshop.jpg','워크샵'],['IMG-09_event.jpg','사내 행사'],['IMG-10_education.jpg','교육·세미나'],['IMG-11_etc.jpg','기타 활동']];
 
   /* ---------- builders ---------- */
   const PH=["IMG-01_office-exterior.jpg", "IMG-02_cafeteria.jpg", "IMG-16_gym.jpg", "IMG-05_lounge.jpg", "IMG-17_pingpong.jpg", "IMG-03_meeting-room.jpg", "IMG-04_workspace.jpg", "IMG-06_office-detail.jpg", "IMG-08_workshop.jpg", "IMG-09_event.jpg", "IMG-10_education.jpg", "IMG-11_etc.jpg", "news-poster-bio.jpg", "news-press-01.jpg", "news-cert-lab.jpg", "news-video-01.jpg", "news-cert-patent.jpg", "news-press-02.jpg"].reduce((o,k)=>(o[k]=IMG+k,o),{});
-  const NI=['news-press-02.jpg','news-poster-bio.jpg','news-press-01.jpg','news-cert-lab.jpg','news-video-01.jpg','news-cert-patent.jpg'];
+  const NI=NEWS.map(n=>n.img), DOC=new Set(NEWS.filter(n=>n.fit==='doc').map(n=>n.img));
   document.querySelectorAll('[data-ph-img]').forEach(el=>{el.insertAdjacentHTML('afterbegin',`<img src="${PH[el.dataset.phImg]}" alt="">`)});
   document.querySelectorAll('[data-ph]').forEach(el=>{el.innerHTML=`<img src="${PH[el.dataset.ph]}" alt="">`});
   const fig=([f,c])=>`<figure class="ph"><img src="${PH[f]||IMG+f}" alt="${c}" onerror="this.remove()"><figcaption>${c}</figcaption></figure>`;
@@ -33,11 +33,11 @@ var PATH=NAGMA_PATH, SECOF=NAGMA_SECOF;
 
   const extra=n=>n.u?`<span class="go">${n.c==='video'?'영상 보기':'기사 보기'} ↗</span>`:`<span class="go none">—</span>`;
   const href=n=>n.u?`href="${n.u}" target="_blank" rel="noopener"`:`href="${PATH.news}"`;
-  setHTML('homeNews',NEWS.slice(0,3).map((n,i)=>`<a class="card" ${href(n)}><div class="thumb${[1,3].includes(i)?' framed':''}"><img src="${PH[NI[i]]}" alt=""><span class="tag">${n.cl}</span></div><div class="meta">${n.d}${n.src?' · <span>'+n.src+'</span>':''}</div><h3>${n.t}</h3><p>${n.s}</p></a>`).join(''));
+  setHTML('homeNews',NEWS.slice(0,3).map((n,i)=>`<a class="card" ${href(n)}><div class="thumb${DOC.has(n.img)?' framed':''}"><img src="${PH[n.img]}" alt=""><span class="tag">${n.cl}</span></div><div class="meta">${n.d}${n.src?' · <span>'+n.src+'</span>':''}</div><h3>${n.t}</h3><p>${n.s}</p></a>`).join(''));
   const nlist=document.getElementById('nlist');
   function renderNews(f){
     if(!nlist)return;
-    nlist.innerHTML=NEWS.filter(n=>f==='all'||n.c===f).map((n,i)=>`<a class="nrow" ${href(n)}><div class="thumb${[1,3].includes(NEWS.indexOf(n))?' framed':''}"><img src="${PH[NI[NEWS.indexOf(n)]]}" alt=""></div><div><div class="meta"><b>${n.cl}</b><span>${n.d}</span>${n.src?'<span>'+n.src+'</span>':''}</div><h3>${n.t}</h3><p>${n.s}</p></div>${extra(n)}</a>`).join('');
+    nlist.innerHTML=NEWS.filter(n=>f==='all'||n.c===f).map((n,i)=>`<a class="nrow" ${href(n)}><div class="thumb${DOC.has(n.img)?' framed':''}"><img src="${PH[n.img]}" alt=""></div><div><div class="meta"><b>${n.cl}</b><span>${n.d}</span>${n.src?'<span>'+n.src+'</span>':''}</div><h3>${n.t}</h3><p>${n.s}</p></div>${extra(n)}</a>`).join('');
     paintThumbs(nlist);
     if(window.__fx)__fx.reveal(nlist);
     document.querySelectorAll('#filters button').forEach(b=>b.classList.toggle('on',b.dataset.f===f));
@@ -160,7 +160,7 @@ var PATH=NAGMA_PATH, SECOF=NAGMA_SECOF;
     team:['IMG-08_workshop.jpg','IMG-10_education.jpg','IMG-09_event.jpg','IMG-03_meeting-room.jpg','IMG-11_etc.jpg'],
     'about-vision':['IMG-08_workshop.jpg','IMG-10_education.jpg','IMG-09_event.jpg','IMG-11_etc.jpg','IMG-03_meeting-room.jpg'],
     'about-rnd':['IMG-04_workspace.jpg','IMG-06_office-detail.jpg','IMG-03_meeting-room.jpg','IMG-10_education.jpg','!news-poster-bio.jpg'],
-    news:['!news-poster-bio.jpg','news-video-01.jpg','!news-cert-lab.jpg','!news-press-01.jpg','!news-cert-patent.jpg'],
+    news:NI.slice(0,5).map(f=>DOC.has(f)?'!'+f:f),
     contact:['IMG-01_office-exterior.jpg','@radar','IMG-05_lounge.jpg','IMG-06_office-detail.jpg','IMG-16_gym.jpg']};
   Object.entries(MOS).forEach(([pg,list])=>{const w=document.querySelector(`.page[data-page="${pg}"] .sub-hero .wrap`);if(!w)return;
     const m=document.createElement('div');m.className='mosaic';
