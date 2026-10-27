@@ -1,8 +1,12 @@
+/* 나그마 사이트 URL 지도 — 섹션 키 → 실제 경로 */
+var NAGMA_PATH={"home": "/", "about": "/about/", "about-naming": "/about/naming/", "about-vision": "/about/vision/", "about-rnd": "/about/rnd/", "about-history": "/about/history/", "about-life": "/about/life/", "team": "/team/", "work": "/work/", "work-ax": "/work/ax/", "work-it": "/work/it/", "work-video": "/work/video/", "work-design": "/work/design/", "work-process": "/work/process/", "news": "/news/", "contact": "/contact/"};
+var NAGMA_SECOF={"about-overview": "about", "team-org": "team", "team-units": "team", "work-medical": "work", "news-list": "news", "contact-info": "contact", "contact-inquiry": "contact", "contact-map": "contact", "news-press": "news", "news-cert": "news"};
+var PATH=NAGMA_PATH, SECOF=NAGMA_SECOF;
 (function(){
   const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
   let lang='ko'; try{lang=localStorage.getItem('nagma-lang')==='en'?'en':'ko'}catch(_){}
   const T=s=>(lang==='en'&&typeof DICT!=='undefined'&&(s in DICT))?DICT[s]:s;
-  const IMG='assets/img/';
+  const IMG='/assets/img/';
 
   /* ---------- data ---------- */
   const NEWS=[
@@ -22,21 +26,23 @@
   document.querySelectorAll('[data-ph-img]').forEach(el=>{el.insertAdjacentHTML('afterbegin',`<img src="${PH[el.dataset.phImg]}" alt="">`)});
   document.querySelectorAll('[data-ph]').forEach(el=>{el.innerHTML=`<img src="${PH[el.dataset.ph]}" alt="">`});
   const fig=([f,c])=>`<figure class="ph"><img src="${PH[f]||IMG+f}" alt="${c}" onerror="this.remove()"><figcaption>${c}</figcaption></figure>`;
-  document.getElementById('homeGallery').innerHTML=[SPACE[0],SPACE[1],SPACE[3],ACT[2]].map(fig).join('');
-  document.getElementById('spaceGallery').innerHTML=SPACE.map(fig).join('');
-  document.getElementById('actGallery').innerHTML=ACT.map(fig).join('');
+  const setHTML=(id,html)=>{const e=document.getElementById(id);if(e)e.innerHTML=html};
+  setHTML('homeGallery',[SPACE[0],SPACE[1],SPACE[3],ACT[2]].map(fig).join(''));
+  setHTML('spaceGallery',SPACE.map(fig).join(''));
+  setHTML('actGallery',ACT.map(fig).join(''));
 
   const extra=n=>n.u?`<span class="go">${n.c==='video'?'영상 보기':'기사 보기'} ↗</span>`:`<span class="go none">—</span>`;
-  const href=n=>n.u?`href="${n.u}" target="_blank" rel="noopener"`:`href="#news"`;
-  document.getElementById('homeNews').innerHTML=NEWS.slice(0,3).map((n,i)=>`<a class="card" ${href(n)}><div class="thumb${[1,3].includes(i)?' framed':''}"><img src="${PH[NI[i]]}" alt=""><span class="tag">${n.cl}</span></div><div class="meta">${n.d}${n.src?' · <span>'+n.src+'</span>':''}</div><h3>${n.t}</h3><p>${n.s}</p></a>`).join('');
+  const href=n=>n.u?`href="${n.u}" target="_blank" rel="noopener"`:`href="${PATH.news}"`;
+  setHTML('homeNews',NEWS.slice(0,3).map((n,i)=>`<a class="card" ${href(n)}><div class="thumb${[1,3].includes(i)?' framed':''}"><img src="${PH[NI[i]]}" alt=""><span class="tag">${n.cl}</span></div><div class="meta">${n.d}${n.src?' · <span>'+n.src+'</span>':''}</div><h3>${n.t}</h3><p>${n.s}</p></a>`).join(''));
   const nlist=document.getElementById('nlist');
   function renderNews(f){
+    if(!nlist)return;
     nlist.innerHTML=NEWS.filter(n=>f==='all'||n.c===f).map((n,i)=>`<a class="nrow" ${href(n)}><div class="thumb${[1,3].includes(NEWS.indexOf(n))?' framed':''}"><img src="${PH[NI[NEWS.indexOf(n)]]}" alt=""></div><div><div class="meta"><b>${n.cl}</b><span>${n.d}</span>${n.src?'<span>'+n.src+'</span>':''}</div><h3>${n.t}</h3><p>${n.s}</p></div>${extra(n)}</a>`).join('');
     paintThumbs(nlist);
     if(window.__fx)__fx.reveal(nlist);
     document.querySelectorAll('#filters button').forEach(b=>b.classList.toggle('on',b.dataset.f===f));
   }
-  document.getElementById('filters').addEventListener('click',e=>{const b=e.target.closest('button');if(b)renderNews(b.dataset.f)});
+  document.getElementById('filters')?.addEventListener('click',e=>{const b=e.target.closest('button');if(b)renderNews(b.dataset.f)});
 
   /* generative thumbnails */
   function paintThumbs(root){
@@ -71,9 +77,10 @@
   }
 
   /* ---------- HERO: scattered data → integrated lanes (slow) ---------- */
-  const cv=document.getElementById('flow'), ctx=cv.getContext('2d');
+  const cv=document.getElementById('flow'), ctx=cv?cv.getContext('2d'):null;
   let W,H,P=[],lanes=[];
   function size(){
+    if(!cv)return;
     const dpr=Math.min(2,devicePixelRatio||1); W=cv.clientWidth; H=cv.clientHeight; if(!W)return;
     cv.width=W*dpr; cv.height=H*dpr; ctx.setTransform(dpr,0,0,dpr,0,0);
     lanes=[...Array(7)].map((_,i)=>H*.22+i*H*.08);
@@ -104,7 +111,8 @@
     });
   }
 
-  let page='home';
+  let page=document.body.dataset.page||'home';
+  const TITLE_KO=document.title;
   function loop(t){
     if(page==='home')frame(t);
     magmas.forEach(m=>{if(m.cv.offsetParent)drawMagma(m,t)});
@@ -128,25 +136,21 @@
   }
 
   /* ---------- router ---------- */
-  const pages=[...document.querySelectorAll('.page')], hdr=document.getElementById('hdr'), veil=document.getElementById('veil');
-  const PAGES=pages.map(p=>p.dataset.page);
-  function parse(){const h=(location.hash||'#home').slice(1);if(PAGES.includes(h))return {pg:h,sec:null};const pg=h.split('-')[0];return PAGES.includes(pg)?{pg,sec:h.includes('-')?h:null}:{pg:'home',sec:null}}
-  function show(){
-    const {pg,sec}=parse(), changed=pg!==page;
-    const apply=()=>{
-      pages.forEach(p=>{const on=p.dataset.page===pg;p.hidden=!on;if(on&&changed){p.style.animation='none';p.offsetHeight;p.style.animation=''}});
-      page=pg;
-      document.querySelectorAll('[data-nav]').forEach(a=>a.classList.toggle('cur',a.dataset.nav===pg.split('-')[0]));
-      if(pg==='home'){size()}
-      if(pg==='news'){renderNews(sec==='news-press'?'press':sec==='news-cert'?'cert':'all')}
-      runCounters(document.querySelector(`.page[data-page="${pg}"]`));
-      const target=sec&&document.querySelector(`[data-sec="${sec}"]`);
-      if(target){target.scrollIntoView({behavior:changed||reduce?'auto':'smooth'})}else if(changed){scrollTo(0,0)}
-      onScroll(); spy(); FX.page(pg);
-    };
-    apply();
+  const hdr=document.getElementById('hdr'), veil=document.getElementById('veil');
+  /* 멀티 페이지 구조: 현재 문서가 곧 현재 페이지. 해시는 같은 페이지 안의 섹션 앵커로만 쓴다 */
+  function hrefFor(k){return PATH[k]?PATH[k]:SECOF[k]?(SECOF[k]===page?'#'+k:PATH[SECOF[k]]+'#'+k):'#'+k}
+  window.__href=hrefFor;
+  function show(smooth){
+    const sec=(location.hash||'').slice(1)||null;
+    document.querySelectorAll('[data-nav]').forEach(a=>a.classList.toggle('cur',a.dataset.nav===page.split('-')[0]));
+    if(page==='home'){size()}
+    if(page==='news'){renderNews(sec==='news-press'?'press':sec==='news-cert'?'cert':'all')}
+    runCounters(document.querySelector(`.page[data-page="${page}"]`));
+    const target=sec&&document.querySelector(`[data-sec="${sec}"]`);
+    if(target)target.scrollIntoView({behavior:smooth&&!reduce?'smooth':'auto'});
+    onScroll(); spy(); FX.page(page);
   }
-  addEventListener('hashchange',show);
+  addEventListener('hashchange',()=>show(true));
 
   /* local nav (sub tabs) */
   /* light-only illustrations */
@@ -172,7 +176,7 @@
     if(pg.dataset.page!=='contact'){const c=document.createElement('a');c.className='lnb-cta';c.dataset.to='contact-inquiry';c.textContent='프로젝트 문의';w.append(c)}
     pg.prepend(nav);
   });
-  document.querySelectorAll('.lnb a').forEach(a=>{a.href='#'+a.dataset.to});
+  document.querySelectorAll('.lnb a').forEach(a=>{a.href=hrefFor(a.dataset.to)});
   function spy(){
     const cur=document.querySelector(`.page[data-page="${page}"]`); if(!cur)return;
     const secs=[...cur.querySelectorAll('[data-sec]')]; let on=secs[0]?.dataset.sec;
@@ -202,7 +206,7 @@
 
   /* inquiry form → Web3Forms (email to rock@nagma.co.kr), mailto fallback */
   const W3F_KEY='12b92a29-6c63-46b6-9fdc-16ab8c4eb609';
-  document.getElementById('inq').addEventListener('submit',async e=>{
+  document.getElementById('inq')?.addEventListener('submit',async e=>{
     e.preventDefault();
     const form=e.currentTarget,btn=form.querySelector('button[type=submit]');
     const v=id=>document.getElementById(id).value.trim();
@@ -574,7 +578,7 @@
     lang=l==='en'?'en':'ko';
     try{localStorage.setItem('nagma-lang',lang)}catch(_){}
     document.documentElement.lang=lang;
-    document.title=lang==='en'?'NAGMA | AI IT Solutions & Data Integration':'나그마 NAGMA | AI IT 솔루션 개발 · 데이터 통합 전문기업';
+    document.title=lang==='en'?(document.body.dataset.titleEn||'NAGMA | AI IT Solutions & Data Integration'):TITLE_KO;
     applyLang(document.body);
     document.querySelectorAll('[data-lang]').forEach(b=>{b.classList.toggle('on',b.dataset.lang===lang);b.setAttribute('aria-pressed',b.dataset.lang===lang)});
   }
