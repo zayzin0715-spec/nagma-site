@@ -1,6 +1,6 @@
 /* 나그마 사이트 URL 지도 — 섹션 키 → 실제 경로 */
 var NAGMA_PATH={"home": "/", "about": "/about/", "about-naming": "/about/naming/", "about-vision": "/about/vision/", "about-rnd": "/about/rnd/", "about-history": "/about/history/", "about-life": "/about/life/", "team": "/team/", "work": "/work/", "work-ax": "/work/ax/", "work-it": "/work/it/", "work-video": "/work/video/", "work-design": "/work/design/", "work-process": "/work/process/", "news": "/news/", "contact": "/contact/"};
-var NAGMA_SECOF={"about-overview": "about", "team-org": "team", "team-units": "team", "work-medical": "work", "news-list": "news", "contact-info": "contact", "contact-inquiry": "contact", "contact-map": "contact", "news-press": "news", "news-cert": "news"};
+var NAGMA_SECOF={"about-overview": "about", "team-org": "team", "team-units": "team", "work-medical": "work", "news-list": "news", "contact-info": "contact", "contact-inquiry": "contact", "contact-map": "contact",};
 var PATH=NAGMA_PATH, SECOF=NAGMA_SECOF;
 (function(){
   const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
@@ -33,16 +33,14 @@ var PATH=NAGMA_PATH, SECOF=NAGMA_SECOF;
 
   const extra=n=>n.u?`<span class="go">${n.c==='video'?'영상 보기':'기사 보기'} ↗</span>`:`<span class="go none">—</span>`;
   const href=n=>n.u?`href="${n.u}" target="_blank" rel="noopener"`:`href="${PATH.news}"`;
-  setHTML('homeNews',NEWS.slice(0,3).map((n,i)=>`<a class="card" ${href(n)}><div class="thumb${DOC.has(n.img)?' framed':''}"><img src="${PH[n.img]}" alt=""><span class="tag">${n.cl}</span></div><div class="meta">${n.d}${n.src?' · <span>'+n.src+'</span>':''}</div><h3>${n.t}</h3><p>${n.s}</p></a>`).join(''));
+  setHTML('homeNews',NEWS.slice(0,3).map((n,i)=>`<a class="card" ${href(n)}><div class="thumb${DOC.has(n.img)?' framed':''}"><img src="${PH[n.img]}" alt=""></div><div class="meta">${n.d}${n.src?' · <span>'+n.src+'</span>':''}</div><h3>${n.t}</h3><p>${n.s}</p></a>`).join(''));
   const nlist=document.getElementById('nlist');
-  function renderNews(f){
+  function renderNews(){
     if(!nlist)return;
-    nlist.innerHTML=NEWS.filter(n=>f==='all'||n.c===f).map((n,i)=>`<a class="nrow" ${href(n)}><div class="thumb${DOC.has(n.img)?' framed':''}"><img src="${PH[n.img]}" alt=""></div><div><div class="meta"><b>${n.cl}</b><span>${n.d}</span>${n.src?'<span>'+n.src+'</span>':''}</div><h3>${n.t}</h3><p>${n.s}</p></div>${extra(n)}</a>`).join('');
+    nlist.innerHTML=NEWS.map((n,i)=>`<a class="nrow" ${href(n)}><div class="thumb${DOC.has(n.img)?' framed':''}"><img src="${PH[n.img]}" alt=""></div><div><div class="meta"><span>${n.d}</span>${n.src?'<span>· '+n.src+'</span>':''}</div><h3>${n.t}</h3><p>${n.s}</p></div>${extra(n)}</a>`).join('');
     paintThumbs(nlist);
     if(window.__fx)__fx.reveal(nlist);
-    document.querySelectorAll('#filters button').forEach(b=>b.classList.toggle('on',b.dataset.f===f));
   }
-  document.getElementById('filters')?.addEventListener('click',e=>{const b=e.target.closest('button');if(b)renderNews(b.dataset.f)});
 
   /* generative thumbnails */
   function paintThumbs(root){
@@ -144,7 +142,7 @@ var PATH=NAGMA_PATH, SECOF=NAGMA_SECOF;
     const sec=(location.hash||'').slice(1)||null;
     document.querySelectorAll('[data-nav]').forEach(a=>a.classList.toggle('cur',a.dataset.nav===page.split('-')[0]));
     if(page==='home'){size()}
-    if(page==='news'){renderNews(sec==='news-press'?'press':sec==='news-cert'?'cert':'all')}
+    if(page==='news'){renderNews()}
     runCounters(document.querySelector(`.page[data-page="${page}"]`));
     const target=sec&&document.querySelector(`[data-sec="${sec}"]`);
     if(target)target.scrollIntoView({behavior:smooth&&!reduce?'smooth':'auto'});
